@@ -20,7 +20,8 @@ for i in range(1, len(argv)):
 
   s1, s2 = scores(samples, freq, q1samples, q1freq, q2samples, q2freq, 'gigantic', 'parking', return_score=True)
 
-  
+  s1data = []
+  s2data = []
 
   wavfile.write('hits/gigantic_hit' + str(i) + '.wav', 16000, np.array(s1data))
 

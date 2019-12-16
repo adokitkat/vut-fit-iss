@@ -22,17 +22,18 @@ def spctgrm(samples, frequency):
 
   return f,t,sgr_log
 
-def drawSpectogram(samples, frequency):
+def drawSpectogram(samples, frequency, legend=False, figuresize=(8,3)):
 
   f, t, sgr_log = spctgrm(samples, frequency) 
 
-  plt.figure(figsize=(8,3))
+  plt.figure(figsize=figuresize)
   plt.pcolormesh(t,f,sgr_log)
   plt.gca().set_title(path.name)
   plt.gca().set_xlabel('Čas [s]')
   plt.gca().set_ylabel('Frekvencia [Hz]')
-  #cbar = plt.colorbar()
-  #cbar.set_label('Spektralna hustota výkonu [dB]', rotation=270, labelpad=15)
+  if legend == True:
+    cbar = plt.colorbar()
+    cbar.set_label('Spektralna hustota výkonu [dB]', rotation=270, labelpad=15)
   plt.tight_layout()
   plt.plot()
   plt.savefig(path.stem + '_spectogram.pdf')
