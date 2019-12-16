@@ -33,14 +33,14 @@ sf = lfilter(b, a, samples)
 f, t, sfgr = spectrogram(sf, freq)
 sfgr_log = 10 * np.log10(sfgr+1e-20)
 """
-def features(samples, frequency, pdf=False, figuresize=(8,2)):
+def features(samples, frequency, filter_sum=16, pdf=False, figuresize=(8,2)):
 
   _, t, sgr_log = spctgrm(samples, frequency)
 
-  sgr_filtered = np.add.reduceat(sgr_log, np.arange(0, len(sgr_log), 16), axis=0)
+  sgr_filtered = np.add.reduceat(sgr_log, np.arange(0, len(sgr_log), filter_sum), axis=0)
 
   fig = plt.figure(figsize=figuresize)
-  plt.pcolormesh(t, np.arange(16), sgr_filtered)
+  plt.pcolormesh(t, np.arange(256/filter_sum), sgr_filtered)
   plt.gca().invert_yaxis()
   plt.gca().set_xlabel('t')
   plt.gca().set_ylabel('features')
@@ -53,4 +53,4 @@ def features(samples, frequency, pdf=False, figuresize=(8,2)):
   else:
     return sgr_filtered
 
-features(samples, freq)
+features(samples, freq, filter_sum=8)

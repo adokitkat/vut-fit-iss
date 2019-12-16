@@ -35,15 +35,7 @@ fig.clf()
 fig = features(samples1, freq1, True)
 pdf.savefig(fig)
 fig.clf()
-"""
-fig = features(samples2, freq2, True, figuresize=(3,2))
-pdf.savefig(fig)
-fig.clf()
 
-fig = features(samples3, freq3, True, figuresize=(3,2))
-pdf.savefig(fig)
-fig.clf()
-"""
 fig = scores(samples1, freq1, samples2, freq2, samples3, freq3, 'gigantic', 'parking')
 pdf.savefig(fig)
 fig.clf()
