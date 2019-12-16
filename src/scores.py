@@ -6,24 +6,6 @@ from sys import argv
 from pathlib import Path
 from features import features
 
-path1 = Path(argv[1])
-
-try:
-  path2 = Path(argv[2])
-  path3 = Path(argv[3])
-
-except:
-  path2 = Path('queries/q1.wav')
-  path3 = Path('queries/q2.wav')
-
-freq1, samples1 = wavfile.read(path1)
-freq2, samples2 = wavfile.read(path2)
-freq3, samples3 = wavfile.read(path3)
-# normalizacia
-samples1 = samples1 / 2**15
-samples2 = samples2 / 2**15
-samples3 = samples3 / 2**15
-
 def scores(samples1, freq1, samples2, freq2, samples3, freq3, q1=None, q2=None, return_score=False):
 
   sentence = features(samples1, freq1, filter_sum=8).transpose()
@@ -44,7 +26,7 @@ def scores(samples1, freq1, samples2, freq2, samples3, freq3, q1=None, q2=None, 
       score += pearsonr(query2[n], sentence[pp+n])[0]
     score_list2.append(score/query2.shape[0])
 
-  print(len(score_list1), ' ', len(score_list2))
+  #print(len(score_list1), '\t', len(score_list2))
 
   t1 = np.arange(len(score_list1))/100*5
   t2 = np.arange(len(score_list2))/100*5
@@ -67,4 +49,23 @@ def scores(samples1, freq1, samples2, freq2, samples3, freq3, q1=None, q2=None, 
   else:
     return fig
 
-scores(samples1, freq1, samples2, freq2, samples3, freq3)
+if __name__ == '__main__':
+  path1 = Path(argv[1])
+
+  try:
+    path2 = Path(argv[2])
+    path3 = Path(argv[3])
+
+  except:
+    path2 = Path('queries/q1.wav')
+    path3 = Path('queries/q2.wav')
+
+    freq1, samples1 = wavfile.read(path1)
+    freq2, samples2 = wavfile.read(path2)
+    freq3, samples3 = wavfile.read(path3)
+    # normalizacia
+    samples1 = samples1 / 2**15
+    samples2 = samples2 / 2**15
+    samples3 = samples3 / 2**15
+
+  scores(samples1, freq1, samples2, freq2, samples3, freq3)

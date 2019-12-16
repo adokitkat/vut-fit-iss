@@ -5,11 +5,6 @@ from scipy.io import wavfile
 from sys import argv
 from pathlib import Path
 
-path = Path(argv[1])
-freq, samples = wavfile.read(path)
-# normalizacia
-samples = samples / 2**15
-
 def spctgrm(samples, frequency):
 
   samples = samples - np.mean(samples)
@@ -39,4 +34,9 @@ def drawSpectogram(samples, frequency, legend=False, figuresize=(8,3)):
   plt.savefig(path.stem + '_spectogram.pdf')
 
 if __name__ == '__main__':
+  path = Path(argv[1])
+  freq, samples = wavfile.read(path)
+  # normalizacia
+  samples = samples / 2**15
+  
   drawSpectogram(samples, freq)

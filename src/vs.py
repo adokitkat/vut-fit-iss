@@ -32,7 +32,7 @@ fig = signal(samples1, freq1, 'gigantic', 'parking')
 pdf.savefig(fig)
 fig.clf()
 
-fig = features(samples1, freq1, True)
+fig = features(samples1, freq1, pdf=True)
 pdf.savefig(fig)
 fig.clf()
 

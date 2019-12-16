@@ -5,11 +5,6 @@ from sys import argv
 from pathlib import Path
 from spectogram import spctgrm
 
-path = Path(argv[1])
-freq, samples = wavfile.read(path)
-# normalizacia
-samples = samples / 2**15
-
 def features(samples, frequency, filter_sum=16, log_spectrum=256, pdf=False, figuresize=(8,2)):
 
   _, t, sgr_log = spctgrm(samples, frequency)
@@ -31,4 +26,9 @@ def features(samples, frequency, filter_sum=16, log_spectrum=256, pdf=False, fig
     return sgr_filtered
 
 if __name__ == '__main__':
+  path = Path(argv[1])
+  freq, samples = wavfile.read(path)
+  # normalizacia
+  samples = samples / 2**15
+
   features(samples, freq)
