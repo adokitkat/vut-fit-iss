@@ -1,5 +1,4 @@
 from scipy.io import wavfile
-from scipy.signal import spectrogram, lfilter, freqz, tf2zpk
 import matplotlib.pyplot as plt
 import numpy as np
 from sys import argv
@@ -34,21 +33,24 @@ sf = lfilter(b, a, samples)
 f, t, sfgr = spectrogram(sf, freq)
 sfgr_log = 10 * np.log10(sfgr+1e-20)
 """
-Nc = 16
-B = 256/Nc
-samp = np.add.reduceat(samples, np.arange(0, len(samples), 16))
+def features(samples, frequency, pdf=False, figuresize=(8,2)):
 
-f, t, sfgr = spectrogram(samp, freq)
-sfgr_log = 10 * np.log10(sfgr+1e-20)
-plt.figure(figsize=(9,3))
-plt.pcolormesh(t*16,f,sfgr_log)
-plt.gca().set_title('Spektrogram vyfiltrovaného signálu')
-plt.gca().set_xlabel('Čas [s]')
-plt.gca().set_ylabel('Frekvence [Hz]')
-cbar = plt.colorbar()
-cbar.set_label('Spektralní hustota výkonu [dB]', rotation=270, labelpad=15)
+  _, t, sgr_log = spctgrm(samples, frequency)
 
-plt.tight_layout()
+  sgr_filtered = np.add.reduceat(sgr_log, np.arange(0, len(sgr_log), 16), axis=0)
 
-plt.plot()
-plt.savefig(path.stem + '_filtred.pdf')
+  fig = plt.figure(figsize=figuresize)
+  plt.pcolormesh(t, np.arange(16), sgr_filtered)
+  plt.gca().invert_yaxis()
+  plt.gca().set_xlabel('t')
+  plt.gca().set_ylabel('features')
+  plt.gca().set_xlim(left=0)
+  plt.tight_layout()
+  if __name__ == '__main__':
+    plt.savefig(path.stem + '_spectogram_filtred.pdf')
+  elif pdf == True:
+    return fig
+  else:
+    return sgr_filtered
+
+features(samples, freq)
