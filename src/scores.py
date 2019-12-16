@@ -8,9 +8,9 @@ from features import features
 
 def scores(samples1, freq1, samples2, freq2, samples3, freq3, q1=None, q2=None, return_score=False):
 
-  sentence = features(samples1, freq1, filter_sum=8).transpose()
-  query1 = features(samples2, freq2, filter_sum=8).transpose()
-  query2 = features(samples3, freq3, filter_sum=8).transpose()
+  sentence = features(samples1, freq1).transpose()
+  query1 = features(samples2, freq2).transpose()
+  query2 = features(samples3, freq3).transpose()
 
   score_list1 = []
   for pp in range(0, sentence.shape[0]-query1.shape[0], 5):
